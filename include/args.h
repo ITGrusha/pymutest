@@ -18,8 +18,11 @@
  * along with Pymutest.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
+#ifndef PYMUTEST_ARGS_H
+#define PYMUTEST_ARGS_H
 
-int main() {
-    return 0;
-}
+struct appArgs_t {
+
+};
+
+#endif
