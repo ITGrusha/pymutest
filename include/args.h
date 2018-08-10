@@ -21,8 +21,11 @@
 #ifndef PYMUTEST_ARGS_H
 #define PYMUTEST_ARGS_H
 
-struct appArgs_t {
+#include <string>
 
+struct appArgs_t {
+    std::string testDir;
+    std::string sourceDir;
 };
 
 #endif
