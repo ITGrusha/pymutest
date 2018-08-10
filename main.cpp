@@ -20,6 +20,22 @@
 
 #include <iostream>
 
+void printHelp() {
+    std::string command;
+
+    #if defined(_WIN32)
+    command = "pymutest.exe";
+    #else
+    command = "pymutest";
+    #endif
+
+    std::cout << "usage: " << command << " [-h] test_dir source_dir" << std::endl;
+    std::cout << std::endl << "Mutation testing for python programs." << std::endl;
+    std::cout << std::endl << "positional arguments:" << std::endl << "tests_dir   folder with unit tests" << std::endl;
+    std::cout << "source_dir  folder with source code" << std::endl;
+    std::cout << std::endl << "optional arguments:" << std::endl << "-h, --help  show this help message and exit" << std::endl;
+}
+
 int main() {
     return 0;
 }
