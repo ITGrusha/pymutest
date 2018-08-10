@@ -40,7 +40,7 @@ void printHelp() {
 int main(int argc, char** argv) {
     if (argc == 1)
         std::cout << "Specify arguments. For more information: " << getCommand() << " --help" << std::endl;
-    else if (strcmp(argv[1], "-h") == 0 or strcmp(argv[1], "--help") == 0)
+    else if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
         printHelp();
     else if (argc == 2)
         std::cout << "Specify source dir. For more information: " << getCommand() << " --help" << std::endl;
