@@ -19,23 +19,30 @@
  */
 
 #include <iostream>
+#include <cstring>
+
+std::string getCommand() {
+    #if defined(_WIN32)
+    return "pymutest.exe";
+    #else
+    return  "pymutest";
+    #endif
+}
 
 void printHelp() {
-    std::string command;
-
-    #if defined(_WIN32)
-    command = "pymutest.exe";
-    #else
-    command = "pymutest";
-    #endif
-
-    std::cout << "usage: " << command << " [-h] test_dir source_dir" << std::endl;
+    std::cout << "usage: " << getCommand() << " [-h] test_dir source_dir" << std::endl;
     std::cout << std::endl << "Mutation testing for python programs." << std::endl;
     std::cout << std::endl << "positional arguments:" << std::endl << "tests_dir   folder with unit tests" << std::endl;
     std::cout << "source_dir  folder with source code" << std::endl;
     std::cout << std::endl << "optional arguments:" << std::endl << "-h, --help  show this help message and exit" << std::endl;
 }
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc == 1)
+        std::cout << "Specify arguments. For more information: " << getCommand() << " --help" << std::endl;
+    else if (strcmp(argv[1], "-h") == 0 or strcmp(argv[1], "--help") == 0)
+        printHelp();
+    else if (argc == 2)
+        std::cout << "Specify source dir. For more information: " << getCommand() << " --help" << std::endl;
     return 0;
 }
