@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <experimental/filesystem>
 #include "include/sourceparser.h"
 
 void printHelp(const std::string &command) {
@@ -39,8 +40,17 @@ int main(int argc, char** argv) {
     else if (argc == 2)
         std::cout << "Specify source dir. For more information: " << command << " --help" << std::endl;
     else {
+        if (strstr(argv[1], argv[2]) == nullptr) {
+            std::cout << "Your project is not compatible. Pymutest supports only projects where tests dir is inside source dir." << std::endl;
+            exit(0);
+        }
+
+        std::string sourceRoot = std::experimental::filesystem::temp_directory_path().string() + "/source/";
+        std::experimental::filesystem::remove_all(sourceRoot);
+        std::experimental::filesystem::copy(argv[2], sourceRoot, std::experimental::filesystem::copy_options::recursive);
+
         std::string testRoot = argv[1];
-        std::string sourceRoot = argv[2];
+        testRoot.replace(testRoot.find(argv[2]), strlen(argv[2]), sourceRoot);
 
         SourceParser sourceParser = SourceParser();
         std::cout << "Collecting list of unit tests" << std::endl;
