@@ -38,5 +38,14 @@ int main(int argc, char** argv) {
         printHelp(command);
     else if (argc == 2)
         std::cout << "Specify source dir. For more information: " << command << " --help" << std::endl;
+    else {
+        std::string testRoot = argv[1];
+
+        SourceParser sourceParser = SourceParser();
+        std::cout << "Collecting list of unit tests" << std::endl;
+        sourceParser.parseTestFiles();
+        std::cout << "Collecting list of source files" << std::endl;
+        sourceParser.parseSourceFiles();
+    }
     return 0;
 }
