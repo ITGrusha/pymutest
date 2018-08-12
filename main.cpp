@@ -31,6 +31,11 @@ void printHelp(const std::string &command) {
     std::cout << std::endl << "optional arguments:" << std::endl << "-h, --help  show this help message and exit" << std::endl;
 }
 
+void copyToTMPDir(const std::string &sourceRoot, const std::string &originalSourceRoot) {
+    std::experimental::filesystem::remove_all(sourceRoot);
+    std::experimental::filesystem::copy(originalSourceRoot, sourceRoot, std::experimental::filesystem::copy_options::recursive);
+}
+
 int main(int argc, char** argv) {
     std::string command = argv[0];
     if (argc == 1)
@@ -46,17 +51,18 @@ int main(int argc, char** argv) {
         }
 
         std::string sourceRoot = std::experimental::filesystem::temp_directory_path().string() + "/source/";
-        std::experimental::filesystem::remove_all(sourceRoot);
-        std::experimental::filesystem::copy(argv[2], sourceRoot, std::experimental::filesystem::copy_options::recursive);
-
         std::string testRoot = argv[1];
         testRoot.replace(testRoot.find(argv[2]), strlen(argv[2]), sourceRoot);
+
+        copyToTMPDir(sourceRoot, argv[2]);
 
         SourceParser sourceParser = SourceParser();
         std::cout << "Collecting list of unit tests" << std::endl;
         sourceParser.parseTestFiles(testRoot);
         std::cout << "Collecting list of source files" << std::endl;
         sourceParser.parseSourceFiles(sourceRoot);
+
+        std::experimental::filesystem::remove_all(sourceRoot);
     }
     return 0;
 }
