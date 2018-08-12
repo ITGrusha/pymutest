@@ -40,12 +40,13 @@ int main(int argc, char** argv) {
         std::cout << "Specify source dir. For more information: " << command << " --help" << std::endl;
     else {
         std::string testRoot = argv[1];
+        std::string sourceRoot = argv[2];
 
         SourceParser sourceParser = SourceParser();
         std::cout << "Collecting list of unit tests" << std::endl;
-        sourceParser.parseTestFiles();
+        sourceParser.parseTestFiles(testRoot);
         std::cout << "Collecting list of source files" << std::endl;
-        sourceParser.parseSourceFiles();
+        sourceParser.parseSourceFiles(sourceRoot);
     }
     return 0;
 }
