@@ -20,17 +20,10 @@
 
 #include <iostream>
 #include <cstring>
+#include "include/sourceparser.h"
 
-std::string getCommand() {
-    #if defined(_WIN32)
-    return "pymutest.exe";
-    #else
-    return  "pymutest";
-    #endif
-}
-
-void printHelp() {
-    std::cout << "usage: " << getCommand() << " [-h] test_dir source_dir" << std::endl;
+void printHelp(const std::string &command) {
+    std::cout << "usage: " << command << " [-h] test_dir source_dir" << std::endl;
     std::cout << std::endl << "Mutation testing for python programs." << std::endl;
     std::cout << std::endl << "positional arguments:" << std::endl << "tests_dir   folder with unit tests" << std::endl;
     std::cout << "source_dir  folder with source code" << std::endl;
@@ -38,11 +31,12 @@ void printHelp() {
 }
 
 int main(int argc, char** argv) {
+    std::string command = argv[0];
     if (argc == 1)
-        std::cout << "Specify arguments. For more information: " << getCommand() << " --help" << std::endl;
+        std::cout << "Specify arguments. For more information: " << command << " --help" << std::endl;
     else if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
-        printHelp();
+        printHelp(command);
     else if (argc == 2)
-        std::cout << "Specify source dir. For more information: " << getCommand() << " --help" << std::endl;
+        std::cout << "Specify source dir. For more information: " << command << " --help" << std::endl;
     return 0;
 }
